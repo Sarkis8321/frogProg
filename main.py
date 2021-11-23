@@ -71,6 +71,13 @@ class mywindow(QtWidgets.QMainWindow):
 
                 cursor.execute("UPDATE users SET surname=?, name=?, patr=?, birth=? WHERE id=?",(SelectItem['surname'],SelectItem['name'],SelectItem['patr'],SelectItem['birth'],SelectItem['id']))
                 conn.commit()
+                SelectItem = {
+                    'id': '',
+                    'surname': '',
+                    'name': '',
+                    'patr': '',
+                    'birth': ''
+                }
 
     def clickDelete(self):
         try:
