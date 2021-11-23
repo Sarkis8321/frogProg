@@ -60,19 +60,18 @@ class mywindow(QtWidgets.QMainWindow):
         }
         for item in r.indexes():
             if item.column() != 0:
+                pass
+        for item in c.indexes():
+            if item.column() != 0:
                 SelectItem['id'] = self.ui.tableWidget.item(item.row(), 0).text()
                 SelectItem['surname'] = self.ui.tableWidget.item(item.row(), 1).text()
                 SelectItem['name'] = self.ui.tableWidget.item(item.row(), 2).text()
                 SelectItem['patr'] = self.ui.tableWidget.item(item.row(), 3).text()
                 SelectItem['birth'] = self.ui.tableWidget.item(item.row(), 4).text()
-        for item in c.indexes():
-            if item.column() != 0:
-                if (SelectItem['surname'] != self.ui.tableWidget.item(item.row(), 1).text() or
-                SelectItem['name'] != self.ui.tableWidget.item(item.row(), 2).text() or
-                SelectItem['patr'] != self.ui.tableWidget.item(item.row(), 3).text() or
-                SelectItem['birth'] != self.ui.tableWidget.item(item.row(), 4).text()):
-                    cursor.execute("UPDATE users SET surname=?, name=?,patr=?,birth=? WHERE id=?",(SelectItem['surname'],SelectItem['name'],SelectItem['patr'],SelectItem['birth'],SelectItem['id']))
-                    conn.commit()
+
+                cursor.execute("UPDATE users SET surname=?, name=?, patr=?, birth=? WHERE id=?",(SelectItem['surname'],SelectItem['name'],SelectItem['patr'],SelectItem['birth'],SelectItem['id']))
+                conn.commit()
+
     def clickDelete(self):
         try:
             delId = int(self.ui.lineEdit_4.text())
