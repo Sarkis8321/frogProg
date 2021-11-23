@@ -1,4 +1,6 @@
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import QTimer
+
 from d import Ui_MainWindow  # импорт нашего сгенерированного файла
 import sys
 import sqlite3
@@ -16,6 +18,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.pushButton.clicked.connect(self.clickSave)
         self.ui.pushButton_2.clicked.connect(self.clickDelete)
         self.renderViewTable()
+        self.timer = QTimer()
 
     def clickSave(self):
         surname = self.ui.lineEdit.text()
@@ -85,10 +88,18 @@ class mywindow(QtWidgets.QMainWindow):
             cursor.execute("DELETE FROM users WHERE id = " + str(delId))
             conn.commit()
             self.ui.label_6.setText('Удалено !')
+            # таймер отключения фразы "Удалено!"
+            self.timer.setInterval(2000)
+            self.timer.setSingleShot(True)
+            self.timer.timeout.connect(self.clearDelBlock)
+            self.timer.start()
+
             self.renderViewTable()
         except ValueError:
             self.ui.label_6.setText('введите правильный id')
 
+    def clearDelBlock(self):
+        self.ui.label_6.setText('')
 
 app = QtWidgets.QApplication([])
 application = mywindow()
